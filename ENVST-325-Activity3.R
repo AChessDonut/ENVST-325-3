@@ -9,13 +9,14 @@ temp_anomalies <- read.csv("climate-change.csv")
 
 colnames(temp_anomalies)
 temp_anomalies$Entity <- as.factor(temp_anomalies$Entity)
-combined_data <- subset(temp_anomalies, Entity %in% c("Northern Hemisphere", "Southern Hemisphere"))
-
+combined_data <- subset(temp_anomalies, Entity %in% c("Northern Hemisphere", 
+                                                  "Southern Hemisphere"))
 combined_data$Day <- as.Date(combined_data$Day)
 # Plots the temperature anomalies in both hemispheres via ggplot
 ggplot(combined_data, aes(x = Day, y = temperature_anomaly, color = Entity)) +
   geom_point() + geom_line() +
-  labs(x = "Year", y = "Tem" + theme_classic()) 
+  labs(x = "Year", y = "Temperature Amamolies for North and South Hemispheres" + 
+         theme_classic()) 
 
 #Prompt 2
 #Plot the total all time emissions for the United States, Mexico, and Canada.
@@ -88,11 +89,33 @@ ggplot(data = World_CO2_emissions, # data for plot
   
   
   
+# Subset data for World temperature anomalies
 World_air_temperature_emissions <- temp_anomalies[temp_anomalies$Entity == "World",]
-ggplot(data = World_air_temperature_emissions, # data for plot
-       aes(x = Day, y=temperature_anomaly, color=Entity, group = Entity ) )+ # aes, x and y
-  geom_point()+ # make points at data point
-  geom_line()+ # use lines to connect data points
-  labs(x="Year", y="World air temperature emissions (tons CO2)")+ # make axis labels
-  theme_classic()+
-  scale_color_manual(values = c("#1b5e5e")) #specify hex codes that include transparency 
+World_air_temperature_emissions$Year <- year(World_air_temperature_emissions$Day)
+# Create the plot
+ggplot(data = World_air_temperature_emissions, 
+       aes(x = Year, y = temperature_anomaly, color = Entity, group = Entity)) + 
+  geom_point() +  # Points at data points
+  geom_line() +   # Connect data points with lines
+  labs(x = "Year", y = "World Air Temperature Anomalies (°C)") +  # Axis labels
+  theme_classic() +
+  scale_color_manual(values = c("#1b5e5e"))  # Customize color
+
+#Prompt 3:
+#Look up any type of environmental data of your interest in our world in data 
+#(link in tutorial). Download the csv and upload it to RStudio Cloud. Remake the graph.
+#You may make the graph exactly as it is or alter it to present the data in a different 
+#format. Explain how you considered principles of visualization in making your graph. 
+#Explain the main conclusion of the graph.
+#Make a plot of air temperature anomalies in the Northern and Southern Hemisphere 
+#in base R and in ggplot2.
+children_school <- read.csv("")
+children_school$Entity <- as.factor(children_school$Entity)
+Countries <- children_school[children_school$Entity %in% c("United States", "Canada", "China"), ]
+ggplot(Countries, aes(x = Year, 
+                      y = `Out-of-school children of primary school age, both sexes (number)`, 
+                      color = Entity)) + geom_point() + geom_line() +
+  labs(x = "Year", 
+       y = "Out-of-school children of primary school age, both sexes (number)") +
+  theme_classic()
+
