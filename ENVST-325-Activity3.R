@@ -109,13 +109,16 @@ ggplot(data = World_air_temperature_emissions,
 #Explain the main conclusion of the graph.
 #Make a plot of air temperature anomalies in the Northern and Southern Hemisphere 
 #in base R and in ggplot2.
-children_school <- read.csv("")
-children_school$Entity <- as.factor(children_school$Entity)
-Countries <- children_school[children_school$Entity %in% c("United States", "Canada", "China"), ]
 ggplot(Countries, aes(x = Year, 
-                      y = `Out-of-school children of primary school age, both sexes (number)`, 
-                      color = Entity)) + geom_point() + geom_line() +
+                      y = Learning.Adjusted.Years.of.School, 
+                      fill = Entity)) + 
+  geom_bar(stat = "identity", position = "dodge") +  
   labs(x = "Year", 
-       y = "Out-of-school children of primary school age, both sexes (number)") +
-  theme_classic()
+       y = "Ages of Adjusted Student Years in School", 
+       title = "Learning Adjusted Years of School",
+       subtitle = "USA, Canada, and China over Time (Years 2010-2020)") +
+  theme_classic(base_size = 14) + 
+  scale_fill_manual(values = c("#f56d66","#ffad2a", "blue")) +  
+  theme(legend.position = "bottom")  
 
+  
