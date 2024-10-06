@@ -109,16 +109,26 @@ ggplot(data = World_air_temperature_emissions,
 #Explain the main conclusion of the graph.
 #Make a plot of air temperature anomalies in the Northern and Southern Hemisphere 
 #in base R and in ggplot2.
+learning_years <- read.csv("learning-adjusted-years-of-school-lays.csv")
+learning_years$Entity <- as.factor(learning_years$Entity)
+Countries <- learning_years[learning_years$Entity %in% c("United States", "Central African Republic", "China", "Singapore", "United Kingdom", "India", "Afghanistan"), ]
+ggplot(Countries, aes(x = Year, 
+                      y = Learning.Adjusted.Years.of.School, 
+                      color = Entity)) + geom_point() + geom_line() +
+  labs(x = "Year", 
+       y = "Learning Adjusted Years of School", ) +
+  theme_classic(base_size = 14) + scale_color_manual(values = c("#f56d66", "#127815", "#ffad2a", "magenta", "#5258db", "#964B00", "yellow")) 
+
 ggplot(Countries, aes(x = Year, 
                       y = Learning.Adjusted.Years.of.School, 
                       fill = Entity)) + 
   geom_bar(stat = "identity", position = "dodge") +  
   labs(x = "Year", 
        y = "Ages of Adjusted Student Years in School", 
-       title = "Learning Adjusted Years of School",
-       subtitle = "USA, Canada, and China over Time (Years 2010-2020)") +
+       title = "Durations of Learning Adjusted Years of School",
+       subtitle = "Countries over Time (Years 2010-2020)") +
   theme_classic(base_size = 14) + 
-  scale_fill_manual(values = c("#f56d66","#ffad2a", "blue")) +  
+  scale_fill_manual(values = c("#f56d66", "#127815", "#ffad2a", "magenta", "#5258db", "#964B00", "yellow"))  +  
   theme(legend.position = "bottom")  
 
   
